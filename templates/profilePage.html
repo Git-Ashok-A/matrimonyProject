@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../static/styles/css/home_style.css">
+  <link rel="stylesheet" href="../static/styles/css/profile_page.css">
+
+
+
+
+  <title>View Profile</title>
+   <style media="screen">
+      body{
+    background-image: url('../static/images/homepage2.jpg'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    letter-spacing: 2px;
+    font-style: oblique;
+    padding: inherit;
+    background-color: #0b162b;
+    font-family: Artifika;
+    overflow-x: hidden;
+  }
+  </style>
+</head>
+<body>
+
+  <div style="background-image:url('loginpage.jpg'); text-align:center; padding:15px;">
+    <header>
+    <a style="text-decoration:none;"href="{{ url_for('home') }}">  <h2 style="color:white;">Authenticated Secure Matrimony</h2></a>
+
+    </header>
+  </div>
+
+
+  <div class="sticky">
+    <div>
+      <ul class="navbar">
+        <li><a  href="#home"> HOME </a></li>
+        <li><a class="active"  href="{{url_for('match_finder')}}"> Find Your Match </a></li>
+        <li><a href="mailto:abcd@gmail.com">CONTACT US </a></li>
+        <li style="float:right;"><a style="margin-right:0" href="#about">ABOUT</a></li>
+        <li style="float:right;" class="dropdown">
+          <a href="#" class="dropbtn">PROFILE</a>
+          <div class="dropdown-content">
+              {% block content %}
+               {% if profile %}
+                   <a href="#">My Profile</a>
+                   <a onclick="window.location = 'http://localhost:5000/dropsession'">Log Out</a>
+               {% else %}
+                   <a href="{{ url_for('login') }}">Log In</a>
+                   <a href="{{ url_for('newUser') }}">Register</a>
+               {% endif %}
+              {% endblock %}          
+            <!-- <a href="#">something</a> -->
+          </div>
+        </li>
+      </ul>
+    </div>
+    </div>
+    
+    <div class="profile-container">
+      <div class="" id="image-container">
+        <img src="https://via.placeholder.com/200" style="border-radius: 10px;" alt="">
+      </div>
+      <br>
+      <div class="tab">
+      <div class="profile-details">
+        <table>
+          <caption>Personal Details</caption>
+          <tr>
+            <th>Name:</th>
+            <td>#Name</td>
+          </tr>
+          <tr>
+            <th>Age:</th>
+            <td>#age</td>
+          </tr>
+          <tr>
+            <th>Gender:</th>
+            <td>#gender</td>
+          </tr>
+          <tr>
+            <th>Height in CM:</th>
+            <td>#height</td>
+          </tr>
+          <tr>
+            <th>Color Complexion:</th>
+            <td>#color</td>
+          </tr>
+          <tr>
+            <th>Highest Qualification:</th>
+            <td>#qualification</td>
+          </tr>
+          <tr>
+            <th>Profession: </th>
+            <td>#profession</td>
+          </tr>
+          <tr>
+            <th>Salary:</th>
+            <td>#salary</td>
+          </tr>
+          <tr>
+            <th>Working Place:</th>
+            <td>#working Place</td>
+          </tr>
+          <tr>
+            <th>Native Place: </th>
+            <td>#native</td>
+          </tr>
+          <tr>
+            <th>Mother Tounge:</th>
+            <td>#mother tounge</td>
+          </tr>
+          <tr>
+            <th>Religion:</th>
+            <td>#religion</td>
+          </tr>
+          <tr>
+            <th>Caste:</th>
+            <td>#caste</td>
+          </tr>
+          <tr>
+            <th>Material Status:</th>
+            <td>#material Status</td>
+          </tr>
+          <tr>
+            <th>Physical Status:</th>
+            <td>#Physical Status</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="tab">
+      <div class="profile-details">
+        <table>
+          <caption>Family Details</caption>
+          <tr>
+            <th>Father Name: </th>
+            <td>#fatherName</td>
+          </tr>
+          <tr>
+            <th>Father Occupation: </th>
+            <td>#father occ</td>
+          </tr>
+          <tr>
+            <th>Mother Name: </th>
+            <td>#mothername</td>
+          </tr>
+          <tr>
+            <th>Mother Occupation: </th>
+            <td>#motheroccupation</td>
+          </tr>
+          <tr>
+            <th>Number Of Brothers:</th>
+            <td>#no.oofbrothers</td>
+          </tr>
+          <tr>
+            <th>Number Of sisters:</th>
+            <td>#no.ofsisters</td>
+          </tr>
+          <tr>
+            <th>About Family: </th>
+            <td>#About family:</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+          <div style="padding: 10px;">
+            <button id="send_interest">Send Interest</button>
+        </div>
+    </div>
+<br><br>
+
+      <br>
+      <br>
+      <div class="footer_container" style="text-align: center;">
+        <footer class="footer">
+                         © copyright
+                       <a class="footer" href="#"> <p class="footer">terms & comditions</p></a>
+                       <a class="footer" href="#"> <p class="footer"> About us</p></a>
+                        <a class="footer" href="#"><p class="footer">Feedback </p></a>
+                         <a class="footer" href="#"> <p class="footer"> Contact</p></a>
+        
+                         <a class="footer" href="#">  <p class="footer">privacy policy</p></a>
+        
+         </footer>
+    </div>
+
+</body>
+</html>
