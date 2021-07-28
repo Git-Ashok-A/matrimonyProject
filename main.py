@@ -73,7 +73,10 @@ app.secret_key = 'abcd123'
 
 @app.route('/')
 def home():
-   return render_template('home2.html')
+       if g.user:
+              profile = True
+              return render_template("home2.html",profile = profile)
+       return render_template('home2.html')
 
 @app.route('/logedin')
 def index():
@@ -86,7 +89,6 @@ def login():
        username = request.form.get('username')
        password = request.form.get('password')
        check =  uservalidate(username,password)
-
        if request.method == 'POST':
               session.pop('user',None)
               if check:
@@ -106,29 +108,85 @@ def home2():
 def newUser():
        alert = False
        accountAdded = False
-       username = request.form.get('username')
-       checkuser(username)
-       usercheck = checkuser(username)
-       if usercheck:
-              alert = True
-              return render_template('newUser.html',alert = alert)
-       elif usercheck == False:
-              uploadData()
-              accountAdded = True
-              return render_template('newUser.html',accountAdded = True)
+       if request.method == 'POST':
+              fname = request.form.get('dob')
+              age = request.form.get('age')
+              gender = request.form.get('gender')
+              height = request.form.get('height')
+              complexion = request.form.get('complexion')
+              highest_education = request.form.get('highest_education')
+              profession = request.form.get('profession')
+              salary = request.form.get('salary')
+              working_place = request.form.get('working_place')
+              native_place = request.form.get('native_place')
+              mother_tounge = request.form.get('mother_tounge')
+              religion = request.form.get('religion')
+              caste = request.form.get('caste')
+              material_status = request.form.get('material_status')
+              physical_status = request.form.get('physical_status')
+              father = request.form.get('father')
+              mother = request.form.get('mother')
+              father_occ = request.form.get('father_occ')
+              mother_occ = request.form.get('mother_occ')
+              num_of_brothers = request.form.get('num_of_brothers')
+              num_of_sisters = request.form.get('num_of_sisters')
+              about_famly = request.form.get('about_famly')
+              photos=request.form.get("photos")
+              register_as = request.form.get('register_as')
+              mobile_number = request.form.get('mobile_number')
+              alt_mobile_number = request.form.get('alt_mobile_number')
+              email_id = request.form.get('email_id')
+              address = request.form.get('address')
+              # RegisterFormData(fname,age,gender,highest_education,profession,salary,city,native_place,height,complexion,mother_tounge,religion,physical_status,father,mother,father_occ,mother_occ,num_of_brothers,num_of_sisters,about_famly,register_as,email,mobile_number,address)
+              #user Details
+              username = request.form.get('username')
+              password = request.form.get('password')
+              checkuser(username)
+              usercheck = checkuser(username)
+              if usercheck:
+                     alert = True
+                     return render_template('newUser.html',alert = alert)
+              elif usercheck == False:
+                     uploadData()
+                     accountAdded = True
+                     return render_template('newUser.html',accountAdded = True)
        return render_template('newUser.html')    
 
-@app.route('/register')
-def registerform():
-       if g.user:
-              return render_template('register_form.html')
-       return redirect(url_for('login'))  
 
-@app.route('/MatchFinder')
+@app.route('/MatchFinder',methods=["POST","GET"])
 def match_finder():
    if g.user:
-         return render_template('match_finder.html')
+          profile = True
+          if request.method =="POST":
+                     gender = request.form.get("gender")
+                     from_age = request.form.get("from_age")
+                     to_age = request.form.get("to_age")
+                     from_height = request.form.get("from_height")
+                     to_height = request.form.get("to_height")
+                     mother_tounge = request.form.get("mother_tounge")
+                     religion = request.form.get("religion")
+                     caste = request.form.get("caste")
+                     material_status = request.form.get("material_status")
+                     print(gender)
+          return render_template('match_finder.html',profile=profile)
    return redirect(url_for('login'))
+
+@app.route('/searchResult')
+def search_result():
+       if g.user:
+              return render_template("search_result.html",profile = True)
+       return redirect(url_for('login'))
+
+@app.route('/interest')
+def interest():
+       if g.user:
+              return render_template('interestPage.html',profile = True)
+       return redirect(url_for('login'))
+
+@app.route('/myProfile')
+def myProfile():
+       if g.user:
+              return render_template ('My_profile.html')
 
 @app.before_request
 def before_request():
@@ -136,60 +194,42 @@ def before_request():
        if 'user' in session:
               g.user = session['user']
                       
-
 @app.route('/dropsession')
 def dropsession():
    session.pop('user',None)
    return redirect(url_for('login'))
 
 
-@app.route('/form', methods = ['POST', 'GET'])
-def register():
-       fname = request.form.get('fname')
-       age = request.form.get('age')
-       gender = request.form.get('gender')
-       highest_education = request.form.get('highest_education')
-       profession = request.form.get('profession')
-       salary = request.form.get('salary')
-       city = request.form.get('city')
-       native_place = request.form.get('native_place')
-       height = request.form.get('height')
-       complexion = request.form.get('complexion')
-       mother_tounge = request.form.get('mother_tounge')
-       religion = request.form.get('religion')
-       physical_status = request.form.get('physical_status')
-       father = request.form.get('father')
-       mother = request.form.get('mother')
-       father_occ = request.form.get('father_occ')
-       mother_occ = request.form.get('mother_occ')
-       num_of_brothers = request.form.get('num_of_brothers')
-       num_of_sisters = request.form.get('num_of_sisters')
-       about_famly = request.form.get('about_famly')
-       register_as = request.form.get('register_as')
-       email = request.form.get('email')
-       mobile_number = request.form.get('mobile_number')
-       address = request.form.get('address')
-       RegisterFormData(fname,age,gender,highest_education,profession,salary,city,native_place,height,complexion,mother_tounge,religion,physical_status,father,mother,father_occ,mother_occ,num_of_brothers,num_of_sisters,about_famly,register_as,email,mobile_number,address)
+# @app.route('/form', methods = ['POST', 'GET'])
+# def register():
+#        fname = request.form.get('fname')
+#        age = request.form.get('age')
+#        gender = request.form.get('gender')
+#        highest_education = request.form.get('highest_education')
+#        profession = request.form.get('profession')
+#        salary = request.form.get('salary')
+#        # city = request.form.get('city')
+#        native_place = request.form.get('native_place')
+#        height = request.form.get('height')
+#        complexion = request.form.get('complexion')
+#        mother_tounge = request.form.get('mother_tounge')
+#        religion = request.form.get('religion')
+#        physical_status = request.form.get('physical_status')
+#        father = request.form.get('father')
+#        mother = request.form.get('mother')
+#        father_occ = request.form.get('father_occ')
+#        mother_occ = request.form.get('mother_occ')
+#        num_of_brothers = request.form.get('num_of_brothers')
+#        num_of_sisters = request.form.get('num_of_sisters')
+#        about_famly = request.form.get('about_famly')
+#        register_as = request.form.get('register_as')
+#        email = request.form.get('email')
+#        mobile_number = request.form.get('mobile_number')
+#        address = request.form.get('address')
+#        # RegisterFormData(fname,age,gender,highest_education,profession,salary,city,native_place,height,complexion,mother_tounge,religion,physical_status,father,mother,father_occ,mother_occ,num_of_brothers,num_of_sisters,about_famly,register_as,email,mobile_number,address)
        
-       return "success"
+#        return "success"
 
-
-
-
-
-@app.route('/searchResult', methods=['GET','POST'])
-def search_result():
-   gender= request.form.get('gender')
-   from_age= request.form.get('from_age')
-   to_age= request.form.get('to_age')
-   from_height = request.form.get('from_height')
-   to_height = request.form.get('to_height')
-   religion = request.form.get('religion')
-   caste = request.form.get('caste')
-   country = request.form.get('country')
-   state = request.form.get('state')
-   district = request.form.get('district')
-   
 
        
 
